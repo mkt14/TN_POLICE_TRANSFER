@@ -1,0 +1,113 @@
+<?php
+require 'vendor/autoload.php'; // Include the PhpSpreadsheet autoloader
+
+session_start();
+$conn = mysqli_connect("localhost","root","","policeprojectdb");
+$A = $_POST['designation'];
+$b = $_POST['vacancy'];
+$c = $_POST['preferences'];
+if ($A == 1) { // Use double equals (==) for comparison
+    $query = "SELECT * FROM hav_grtmt where p1='$c' OR p2='$c' ORDER BY DORP ASC LIMIT $b";
+    $result = $conn->query($query);
+}
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
+
+$sheet->setCellValue('A1', 'Name');
+$sheet->setCellValue('B1', 'PC NO');
+$sheet->setCellValue('C1', 'DOE');
+$sheet->setCellValue('D1', 'Preference');
+$sheet->setCellValue('E1', 'Native District');
+
+$row = 2;
+
+if ($result->num_rows > 0) {
+    // Output the results and add data to the spreadsheet
+    while ($row_data = $result->fetch_assoc()) {
+        $sheet->setCellValue('A' . $row, $row_data["Name"]);
+        $sheet->setCellValue('B' . $row, $row_data["Employee_ID"]);
+        $sheet->setCellValue('C' . $row, $row_data["DOE"]);
+        $sheet->setCellValue('D' . $row, $row_data["p1"]);
+        $sheet->setCellValue('E' . $row, $row_data["Native_District"]);
+
+        $row++;
+    }
+} else {
+    echo "No results found.";
+}
+
+// Save the Excel file
+$writer = new Xlsx($spreadsheet);
+$filename = "output.xlsx";
+$writer->save($filename);
+
+// Provide the file as a download
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="' . $filename . '"');
+header('Cache-Control: max-age=0');
+
+readfile($filename);
+
+// Clean up the file
+unlink($filename);
+
+// Close the database connection
+$conn->close();
+   <html>  
+    <head>  
+     <title>Export MySQL data to Excel in PHP</title>  
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+    </head>  
+    <body>  
+     <div class="container">  
+      <br />  
+      <br />  
+      <br />  
+      <div class="table-responsive">  
+       <!-- <h2 align="center">Export MySQL data to Excel in PHP</h2><br />  -->
+       <table class="table table-bordered">
+        <tr>  
+                        <th>Name</th>  
+                         <th>PC NO</th>  
+                         <th>DOE</th>  
+                         <th>Preference</th>
+                         <th>Native District</th>
+                    </tr>
+        <?php
+    if ($result->num_rows > 0) {
+        // Output the results
+        while ($row = $result->fetch_assoc()) {
+            echo '  
+            <tr>  
+              <td>'.$row["Name"].'</td>  
+              <td>'.$row["Employee_ID"].'</td>  
+              <td>'.$row["DOE"].'</td>  
+              <td>'.$row["p1"].'</td>  
+              <td>'.$row["Native_District"].'</td>
+            </tr>  
+             ';  
+        
+        }
+    } else {
+        echo "No results found.";
+    }
+    
+    // Close the database connection
+    $conn->close();
+    ?>
+
+</table>
+    <!-- <br />
+    <form method="post" action="export.php">
+     <input type="submit" name="export" class="btn btn-success" value="Export" />
+    </form>
+   </div>  
+</div> -->
+</body>
+</html>

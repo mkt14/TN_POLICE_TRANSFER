@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Police Department</title>
+  <link rel="stylesheet" type="text/css" href="police.css">
+  <link rel="icon" href="logo police.jpeg">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #c4b8aa;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      max-height: 600px;
+      margin: 100px auto;
+      padding: 50px;
+      background-color: #ffffff;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .main {
+      text-align: center;
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    input[type="button"] {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+    input[type="button"]:hover {
+      background-color: #45a049;
+    }
+    .note {
+      font-weight: bold;
+      color: #888;
+    }
+    .valid {
+      color: #4CAF50;
+    }
+    .image1 {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .image1 img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo police.jpeg.jpg" alt="Police Department Logo">
+    <div class="main">
+      <h2>Police Department Admin Login</h2>
+      <form id="form_id" method="post" name="myform">
+        <label for="username">User Name:</label>
+        <input type="text" name="username" id="username">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password">
+        <input type="button" value="Login" id="submit" onclick="validate()">
+      </form>
+      <span class="note"><b>Note:</b> <br/><b class="valid">Username: police<br/>Password: police123</b></span>
+    </div>
+  </div>
+
+  <script src="adminlogin.js"></script>
+</body>
+</html>
